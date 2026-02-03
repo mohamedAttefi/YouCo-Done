@@ -1,11 +1,37 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* Override Breeze's default indigo with your BookMyTable Primary */
+.form-input:focus,
+.form-select:focus {
+    border-color: #137fec !important;
+    --tw-ring-color: #137fec !important;
+}
+
+/* Style the buttons in the partials */
+button[type="submit"] {
+    background-color: #137fec !important;
+    border-radius: 0.5rem;
+    /* lg */
+    font-weight: 700;
+}
+
+/* Style the input fields inside partials */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    background-color: transparent;
+    border-radius: 0.5rem;
+    border-color: #e2e8f0;
+}
+
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"] {
+    background-color: #0f172a;
+    /* slate-950 */
+    border-color: #1e293b;
+    /* slate-800 */
 }
