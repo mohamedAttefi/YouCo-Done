@@ -25,16 +25,26 @@
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-24 w-24 border-4 border-slate-50 dark:border-slate-800 shadow-inner overflow-hidden"
+                                @php
+                                $profilePhoto=Auth::user()
+                                ->photos()
+                                ->where('type', 'profile')
+                                ->latest()
+                                ->first();
+                                @endphp
+
+                                style='background-image: url("{{ $profilePhoto
+    ? asset($profilePhoto->url)
+    : "https://ui-avatars.com/api/?name=" . urlencode(Auth::user()->name) . "&color=7F9CF5&background=EBF4FF"
+}}");'>
+
                             </div>
                         </button>
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link >
+                        <x-dropdown-link>
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
@@ -42,8 +52,8 @@
                         <form method="POST" action="">
                             @csrf
 
-                            <x-dropdown-link 
-                                    onclick="event.preventDefault();
+                            <x-dropdown-link
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -80,7 +90,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link >
+                <x-responsive-nav-link>
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
@@ -88,8 +98,8 @@
                 <form method="POST" action="">
                     @csrf
 
-                    <x-responsive-nav-link 
-                            onclick="event.preventDefault();
+                    <x-responsive-nav-link
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
