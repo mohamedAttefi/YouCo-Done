@@ -59,7 +59,7 @@
                 </div>
                 <div class="flex flex-1 justify-end gap-6 items-center">
                     <nav class="hidden md:flex items-center gap-8">
-                        <a class="text-[#0d141b] dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="{{ route('show.restaurants') }}">Explore</a>
+                        <a class="text-[#0d141b] dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="">Explore</a>
                         <a class="text-[#0d141b] dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="#">Offers</a>
                     </nav>
                     <div class="flex gap-3">
