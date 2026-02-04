@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Restaurant;
-use App\Models\Menu;
+use App\Models\Client;
 use Illuminate\Http\Request;
 
-class RestaurantController extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $restaurants = Restaurant::all()->where('is_deleted', false);
-        return view('Restaurants', ['restaurants' => $restaurants]);
+        //
     }
 
     /**
@@ -36,17 +34,15 @@ class RestaurantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Client $client)
     {
-        $restaurant = Restaurant::find($id);
-        $menuItems = Menu::all()->where('restaurant_id', $id);
-        return view('restaurant', ['restaurant' => $restaurant, 'menuItems' => $menuItems]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Restaurant $restaurant)
+    public function edit(Client $client)
     {
         //
     }
@@ -54,7 +50,7 @@ class RestaurantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Restaurant $restaurant)
+    public function update(Request $request, Client $client)
     {
         //
     }
@@ -62,7 +58,7 @@ class RestaurantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Restaurant $restaurant)
+    public function destroy(Client $client)
     {
         //
     }

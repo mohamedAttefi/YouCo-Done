@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Restaurateur;
 use App\Models\Restaurant;
-use App\Models\Menu;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class RestaurantController extends Controller
+class RestaurateurController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $restaurants = Restaurant::all()->where('is_deleted', false);
-        return view('Restaurants', ['restaurants' => $restaurants]);
+        $restaurants = Restaurateur::with('restaurants')->find(2)->restaurants;
+        return view('restaurateurDashboard', ['restaurants' => $restaurants]);
     }
 
+    
+public function addRestaurant(){
+    return view('AddRestaurant');
+}
     /**
      * Show the form for creating a new resource.
      */
@@ -36,17 +41,15 @@ class RestaurantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Restaurateur $restaurateur)
     {
-        $restaurant = Restaurant::find($id);
-        $menuItems = Menu::all()->where('restaurant_id', $id);
-        return view('restaurant', ['restaurant' => $restaurant, 'menuItems' => $menuItems]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Restaurant $restaurant)
+    public function edit(Restaurateur $restaurateur)
     {
         //
     }
@@ -54,7 +57,7 @@ class RestaurantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Restaurant $restaurant)
+    public function update(Request $request, Restaurateur $restaurateur)
     {
         //
     }
@@ -62,7 +65,7 @@ class RestaurantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Restaurant $restaurant)
+    public function destroy(Restaurateur $restaurateur)
     {
         //
     }
