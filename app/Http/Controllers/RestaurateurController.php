@@ -14,14 +14,12 @@ class RestaurateurController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurateur::with('restaurants')->find(2)->restaurants;
+        $restaurants = Restaurateur::with('restaurants')->find(Auth::user()->id)->restaurants->where('is_deleted', false);
         return view('restaurateurDashboard', ['restaurants' => $restaurants]);
     }
 
-    
-public function addRestaurant(){
-    return view('AddRestaurant');
-}
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -35,7 +33,7 @@ public function addRestaurant(){
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -49,9 +47,9 @@ public function addRestaurant(){
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Restaurateur $restaurateur)
+    public function edit()
     {
-        //
+        
     }
 
     /**
