@@ -8,6 +8,6 @@ class Client extends User
 {
         public function favorites()
     {
-        return $this->hasMany(Favorit::class, 'favorites');
+        return $this->hasOne(Favorit::class, 'favorites');
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -27,6 +26,11 @@ class User extends Authenticatable
         'role',
         'is_active'
     ];
+
+    public function asRestaurateur()
+    {
+        return Restaurateur::find($this->id);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

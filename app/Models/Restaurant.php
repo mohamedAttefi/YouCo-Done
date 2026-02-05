@@ -14,11 +14,16 @@ class Restaurant extends Model
 
     public function menus()
     {
-        return $this->hasMany(Restaurant::class);
+        return $this->hasMany(Menu::class);
     }
 
     public function restaurateur()
     {
         return $this->belongsTo(Restaurateur::class);
+    }
+
+        public function photos()
+    {
+        return $this->morphMany(Photo::class, 'imageable');
     }
 }
