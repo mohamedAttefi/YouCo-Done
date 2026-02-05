@@ -42,11 +42,6 @@ class RegisteredUserController extends Controller
             'is_active' => true,
         ]);
         $user->assignRole($user->role);
-        event(new Registered($user));
-
-        Auth::login($user);
-        if ($user->hasRole('client')) return redirect(route('profile', ['user' => $user]));
-        if ($user->hasRole('admin')) return redirect(route('admin.dashboard', ['user' => $user]));
-        if ($user->hasRole('restauratuer')) return redirect(route('restaurateur.dashboard', ['user' => $user]));
+         return redirect()->route('login.form');
     }
 }
