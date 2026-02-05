@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfilePhotoController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\RestaurateurController;
+use App\Http\Controllers\MenuController;
 
 
 Route::get('/', function () {
@@ -23,10 +24,17 @@ Route::post('/Login', [AuthenticatedSessionController::class, 'store'])->name('l
 Route::get('/profile', [UserController::class, 'profile'])->name('client.profile');
 
 
-Route::patch('/profile/avatar', [ProfilePhotoController::class, 'update'])->middleware(['auth', 'role:client'])->name('profile.avatar.update');
+Route::patch('/profile/avatar', [ProfilePhotoController::class, 'update'])->middleware(['auth'])->name('profile.avatar.update');
 
-Route::get('/Explore', [RestaurantController::class, 'index'])->name('show.restaurants');
+Route::any('/Explore', [RestaurantController::class, 'index'])->name('show.restaurants');
 Route::get('/Explore/{id}', [RestaurantController::class, 'show'])->name('show.restaurant');
 
-Route::get('/Restaurateur/Dashboard', [RestaurateurController::class, 'index'])->name('restaurateur.dashboard');
-Route::get('/Restaurateur/Add/Restaurant', [RestaurateurController::class, 'addRestaurant'])->name('restaurant.add');
+Route::get('/Restaurateur/Dashboard', [RestaurateurController::class, 'index'])->name('restaurateur.dashboard')->middleware(['auth', 'role:restaurateur']);
+Route::get('/Restaurateur/Add/Restaurant', [RestaurantController::class, 'create'])->name('restaurant.add')->middleware(['auth', 'role:restaurateur']);
+Route::post('/Restaurateur/Add/Restaurant', [RestaurantController::class, 'store'])->name('restaurant.create')->middleware(['auth', 'role:restaurateur']);
+Route::get('/Restaurateur/Edit/Restaurant/{id}', [RestaurantController::class, 'edit'])->name('restaurant.edit')->middleware(['auth', 'role:restaurateur']);
+Route::post('/Restaurateur/Edit/Restaurant/{id}', [RestaurantController::class, 'update'])->name('restaurant.update')->middleware(['auth', 'role:restaurateur']);
+Route::get('/Restaurateur/delete/Restaurant/{id}', [RestaurantController::class, 'destroy'])->name('restaurant.delete')->middleware(['auth', 'role:restaurateur']);
+Route::get('/Restaurateur/add/menu', [MenuController::class, 'create'])->name('menu.create')->middleware(['auth', 'role:restaurateur']);
+
+Route::get('/Logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
