@@ -27,7 +27,6 @@
 
             <form method="POST" action="{{ route('register.form') }}" class="space-y-5">
                 @csrf
-
                 <div class="space-y-1">
                     <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1" for="name">Full Name</label>
                     <div class="relative group">
@@ -91,7 +90,7 @@
 
         <div class="bg-slate-50 dark:bg-slate-800/50 p-6 text-center border-t border-slate-100 dark:border-slate-800">
             <p class="text-sm text-slate-500 dark:text-slate-400">
-                Already have an account? 
+                Already have an account?
                 <a class="font-bold text-primary hover:text-primary/80 transition-colors ml-1" href="{{ route('login.form') }}">Sign in</a>
             </p>
         </div>

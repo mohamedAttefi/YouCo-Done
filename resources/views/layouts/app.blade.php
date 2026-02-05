@@ -57,28 +57,28 @@
                     <h2 class="text-[#0d141b] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Youco'Done</h2>
                 </div>
                 <div class="hidden md:flex items-center gap-6">
-                    <a class="text-[#0d141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Explore</a>
-                    <a class="text-[#0d141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Reservations</a>
+                    <a class="text-[#0d141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="{{ route('show.restaurants') }}">Explore</a>
                     <a class="text-[#0d141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Favorites</a>
                 </div>
             </div>
-            <div class="flex flex-1 max-w-md items-center gap-4">
+            <form method="GET" action="{{ route('show.restaurants') }}" class="flex flex-1 max-w-md items-center gap-4">
+                @csrf
                 <label class="flex flex-col flex-1 !h-10">
                     <div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden border border-[#e7edf3] dark:border-slate-700">
                         <div class="text-[#4c739a] flex bg-[#e7edf3] dark:bg-slate-800 items-center justify-center px-3">
                             <span class="material-symbols-outlined text-xl">search</span>
                         </div>
-                        <input class="form-input flex w-full min-w-0 flex-1 border-none bg-[#e7edf3] dark:bg-slate-800 text-[#0d141b] dark:text-white focus:ring-0 placeholder:text-[#4c739a] text-sm" placeholder="Search for restaurants, cuisines..." value="" />
+                        <input name="q" value="{{ request('q') }}" class="form-input flex w-full min-w-0 flex-1 border-none bg-[#e7edf3] dark:bg-slate-800 text-[#0d141b] dark:text-white focus:ring-0 placeholder:text-[#4c739a] text-sm" placeholder="Search for restaurants, cuisines..." value="" />
                     </div>
                 </label>
-            </div>
+                <button type="submit" class="hidden"></button>
+            </form>
             <div class="flex items-center gap-4">
                 @if(Auth::check())
-                @if(Auth::user()->hasRole('client'))
-                <button class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-red-500 text-white text-sm font-bold tracking-[0.015em] hover:bg-red-500/90 transition-all">
+                <a href="{{ route('logout') }}" class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-red-500 text-white text-sm font-bold tracking-[0.015em] hover:bg-red-500/90 transition-all">
                     Sign out
-                </button>
-                @elseif(Auth::user()->role == 'restaurateur')
+                </a>
+                @if(Auth::user()->role == 'restaurateur')
                 <a href="{{ route('restaurant.add') }}" class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-[0.015em] hover:bg-primary/90 transition-all">
                     + Add Restaurant
                 </a>

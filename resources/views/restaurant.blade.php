@@ -11,15 +11,23 @@
         <!-- Image Gallery Grid -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
             <div class="md:col-span-2 h-[400px]">
-                <div class="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg" data-alt="Interior view of a cozy French bistro" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDSranjpJlXXk-2pMXXSkahEPy1Wqboj9TLNrh0TqjIM4Oaw9rtYnvW0Bqjlihlz6InHEUXTHhY7aQVaI-IGBBsuEiZtU3WtEwSjJHbeWTC3wLKE-r5TGZoAu6cY3UvAUdO6UBMo2QglMUKZqyoX7OrO5Zz247nWNpgKzvpG7sIlOia1IQsuGHptqgzeqRT_NaFqmQA3EUUV8CPYu5_-uDWuAPoj1vbBYh6X2B6a1PBVRJpP_SaPBVx0P9jlGjQ7xXfqIFW5CBMdOgP");'></div>
+                <div
+                    class="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg"
+                    data-alt="Interior view of a cozy French bistro"
+                    style="background-image: url('{{ $restaurant->photos->isNotEmpty() ? asset($restaurant->photos->first()->url) : 'https://i.pinimg.com/1200x/81/21/30/812130b173f9dc492872ec5a6fce4889.jpg' }}');"></div>
             </div>
             <div class="flex flex-col gap-3 h-[400px]">
-                <div class="flex-1 bg-center bg-no-repeat bg-cover rounded-lg" data-alt="Platter of gourmet French appetizers" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBNDboEcyiHn0FRa0O6eTa45f0eF5M75NZ-98nD-IK-tbE9CisP3oiuzDpwf_2DIoLzXJ4IVjBaEeUmU43UgO9mS_VhLDkSYSqVghJ13-VZr6Qvz-dDzw7SSMIMqqb_nge07KizlFtd2NgB29nEdb7nywTwVqAq21rNknhi54cbccyQ53Q5ZC3-QovriJ_xZU4YRJT7xfe7X4OFrJ4SF1KV3XsPhVObg83kvAkVDjv332oHZdTvt9Mk0BjKP0TfvH7hzcMRyhyrN8p1");'></div>
-                <div class="flex-1 bg-center bg-no-repeat bg-cover rounded-lg relative group cursor-pointer" data-alt="Selection of French desserts" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDDw0gkA2ctebHKq8R-jNfIjFpfkup-DAGWNv72RU5Y2RYHQ0W73epLeLthQ7RubJ5-Zu7jlFXfRtru0Z1xqQ1kmuj3AjnRIQCc2F9P4iBZgH7wGnjElZTXg9UCJbRcFJ6Xg-YyAGtDVGECnIT4kLmj1nLQziIPtSp7azONiKdkHsxVMPnDvFBt_51iKAW-M6I1XEIyIRcY2g07kT376SxWLWUH-K2q3aVCi8uTSgYcaD-JeYi1u30OuTcr8X3qfy_BKjqFUzsYP45B");'>
-                    <div class="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center group-hover:bg-black/50 transition-all">
-                        <span class="text-white font-bold text-lg">+12 Photos</span>
-                    </div>
+                <div
+                    class="flex-1 bg-center bg-no-repeat bg-cover rounded-lg relative group cursor-pointer"
+                    data-alt="Selection of French desserts"
+                    style="background-image: url('{{ $restaurant->photos->count() > 1 ? asset($restaurant->photos[1]->url) : 'https://i.pinimg.com/1200x/81/21/30/812130b173f9dc492872ec5a6fce4889.jpg' }}');">
                 </div>
+                <div
+                    class="flex-1 bg-center bg-no-repeat bg-cover rounded-lg relative group cursor-pointer"
+                    data-alt="Selection of French desserts"
+                    style="background-image: url('{{ $restaurant->photos->count() > 2 ? asset($restaurant->photos[2]->url) : 'https://i.pinimg.com/1200x/81/21/30/812130b173f9dc492872ec5a6fce4889.jpg' }}');">
+                </div>
+            </div>
             </div>
         </section>
         <div class="flex flex-col lg:flex-row gap-10">
@@ -40,7 +48,8 @@
                 <div>
                     <h3 class="text-[#0d141b] dark:text-white text-2xl font-bold mb-6">Main Courses</h3>
                     <div class="grid grid-cols-1 gap-6">
-                        @foreach($menuItems as $Item)
+
+                        @forelse($menuItems as $Item)
                         <div class="flex flex-col gap-1 pb-4 border-b border-dashed border-slate-300 dark:border-slate-700">
                             <div class="flex justify-between font-bold text-lg">
                                 <span class="dark:text-white">{{ $Item->title }}</span>
@@ -48,21 +57,15 @@
                             </div>
                             <p class="text-[#4c739a] dark:text-slate-400">{{ $Item->description }}</p>
                         </div>
-                        @endforeach
-                        <div class="flex flex-col gap-1 pb-4 border-b border-dashed border-slate-300 dark:border-slate-700">
-                            <div class="flex justify-between font-bold text-lg">
-                                <span class="dark:text-white">Coq au Vin</span>
-                                <span class="text-primary">$34</span>
-                            </div>
-                            <p class="text-[#4c739a] dark:text-slate-400">Red wine braised chicken, mushrooms, pearl onions, bacon</p>
+                        @empty
+                        <div class="flex flex-col items-center justify-center gap-3 py-10 text-center border border-dashed border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800/40">
+                            <span class="material-symbols-outlined text-4xl text-slate-400">restaurant_menu</span>
+
+                            <p class="text-slate-600 dark:text-slate-300 font-semibold">
+                                No menu items yet
+                            </p>
                         </div>
-                        <div class="flex flex-col gap-1 pb-4 border-b border-dashed border-slate-300 dark:border-slate-700">
-                            <div class="flex justify-between font-bold text-lg">
-                                <span class="dark:text-white">Roasted Duck Breast</span>
-                                <span class="text-primary">$38</span>
-                            </div>
-                            <p class="text-[#4c739a] dark:text-slate-400">Orange gastrique, parsnip puree, glazed carrots</p>
-                        </div>
+                        @endforelse
                     </div>
                 </div>
 

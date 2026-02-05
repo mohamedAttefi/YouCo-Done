@@ -1,6 +1,5 @@
 <x-app-layout>
     <main class="max-w-[1000px] mx-auto px-6 py-10">
-        <!-- Page Heading -->
         @if ($errors->any())
         <div class="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-800">
             <ul class="list-disc list-inside">
@@ -12,13 +11,13 @@
         @endif
 
         <form
-            action="{{ route('restaurant.create') }}"
+            action="{{ route('restaurant.update', $restaurant->id) }}"
             method="POST"
             enctype="multipart/form-data">
             @csrf
             <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
                 <div class="flex flex-col gap-1">
-                    <h1 class="text-3xl font-black leading-tight tracking-tight">Add New Restaurant</h1>
+                    <h1 class="text-3xl font-black leading-tight tracking-tight">Update Restaurant</h1>
                     <p class="text-slate-500 dark:text-slate-400 text-base">Fill in the details below to list your restaurant on BookMyTable.</p>
                 </div>
                 <button class="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-bold hover:bg-slate-200 transition-colors">
@@ -37,7 +36,7 @@
                     <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="flex flex-col gap-2">
                             <label class="text-sm font-semibold">Restaurant Name</label>
-                            <input name="name" name class="form-input w-full rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-12 px-4 focus:ring-primary focus:border-primary" placeholder="e.g. The Golden Bistro" type="text" />
+                            <input name="name" value="{{ $restaurant->name }}" name class="form-input w-full rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-12 px-4 focus:ring-primary focus:border-primary" placeholder="e.g. The Golden Bistro" type="text" />
                         </div>
                         <div class="flex flex-col gap-2">
                             <label class="text-sm font-semibold">Cuisine Type</label>
@@ -52,7 +51,7 @@
                         </div>
                         <div class="flex flex-col gap-2 md:col-span-2">
                             <label class="text-sm font-semibold">Tagline (Brief Description)</label>
-                            <input name="description" class="form-input w-full rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-12 px-4 focus:ring-primary focus:border-primary" placeholder="e.g. Authentic Italian flavors in the heart of the city" type="text" />
+                            <input value="{{ $restaurant->description }}" name="description" class="form-input w-full rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-12 px-4 focus:ring-primary focus:border-primary" placeholder="e.g. Authentic Italian flavors in the heart of the city" type="text" />
                         </div>
                     </div>
                 </section>
@@ -65,11 +64,11 @@
                     <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="flex flex-col gap-2">
                             <label class="text-sm font-semibold">City</label>
-                            <input name="city" class="form-input w-full rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-12 px-4 focus:ring-primary focus:border-primary" placeholder="e.g. San Francisco" type="text" />
+                            <input value="{{ $restaurant->city }}" name="city" class="form-input w-full rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-12 px-4 focus:ring-primary focus:border-primary" placeholder="e.g. San Francisco" type="text" />
                         </div>
                         <div class="flex flex-col gap-2 md:col-span-2">
                             <label class="text-sm font-semibold">Full Address</label>
-                            <textarea name="address" class="form-input w-full rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 p-4 focus:ring-primary focus:border-primary" placeholder="Enter full street address, floor, and suite number" rows="3"></textarea>
+                            <textarea name="address" class="form-input w-full rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 p-4 focus:ring-primary focus:border-primary" placeholder="Enter full street address, floor, and suite number" rows="3">{{ $restaurant->name }}</textarea>
                         </div>
                     </div>
                 </section>
@@ -84,7 +83,7 @@
                             <label class="text-sm font-semibold">Seating Capacity</label>
                             <div class="flex items-center gap-3">
 
-                                <input name="capacity" class="form-input w-full text-center rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-10 focus:ring-primary focus:border-primary" type="number" value="25" />
+                                <input value="{{ $restaurant->capacity }}" name="capacity" class="form-input w-full text-center rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-10 focus:ring-primary focus:border-primary" type="number" value="25" />
 
                             </div>
                         </div>
@@ -95,9 +94,9 @@
                                 <div class="flex flex-wrap items-center justify-between p-3 rounded-lg border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
                                     <span class="font-medium w-24">Monday - Sunday</span>
                                     <div class="flex items-center gap-2">
-                                        <input name="opening_time" class="form-input text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary" type="time" value="09:00" />
+                                        <input value="{{ $restaurant->opening_time }}" name="opening_time" class="form-input text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary" type="time" value="09:00" />
                                         <span class="text-slate-400">to</span>
-                                        <input name="closing_time" class="form-input text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary" type="time" value="22:00" />
+                                        <input name="closing_time" value="{{ $restaurant->closing_time }}" class="form-input text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary" type="time" value="22:00" />
                                     </div>
                                 </div>
                             </div>
@@ -109,56 +108,33 @@
                         <span class="material-symbols-outlined text-primary">photo_library</span>
                         <h2 class="text-lg font-bold">Media &amp; Gallery</h2>
                     </div>
-                    <div class="p-6 space-y-6">
 
-                        <input
-                            type="file"
-                            name="images[]"
-                            multiple
-                            accept="image/png,image/jpeg"
-                            class="hidden"
-                            id="images" />
+                    <div class="p-6 space-y-4">
+                        <label class="text-sm font-semibold">Add Image URLs</label>
+                        <div id="image-inputs" class="space-y-2">
+                            <div class="flex gap-2 items-center">
+                                <input type="text" name="images[]" placeholder="Enter image URL" class="form-input w-full rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-10 px-4 focus:ring-primary focus:border-primary image-url-input" />
+                                <button type="button" class="bg-red-500 text-white px-2 py-1 rounded remove-btn">X</button>
+                            </div>
+                        </div>
+                        <button type="button" id="add-image-btn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">Add Another Image</button>
 
-                        <label for="images"
-                            class="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl p-10 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all cursor-pointer">
-                            <span class="material-symbols-outlined text-4xl text-primary mb-4">cloud_upload</span>
-                            <p class="text-base font-bold mb-1">Upload Gallery</p>
-                            <p class="text-sm text-slate-500 text-center">
-                                PNG, JPG up to 10MB.
-                            </p>
-                        </label>
-                    </div>
-
-                    <!-- Previews -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4">
-                        <div class="relative aspect-square rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 group">
-                            <img class="object-cover w-full h-full" data-alt="Modern restaurant interior with warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN6D9urUxBDsY812rhpJIvbF_8L_yKJharuPuqOsyd6C9EEy76AoBKmXW9rlRUplr8InIOLhFSc5b1qOzbANFQ1q8opjyFB7Ty51oxhDpRkKIw2W57s_TWiqVbFkY7BkEpJGb2rLK56h2Rz69H4Q2AOXbihZWrWFAd3IBct5XnVsWPdRL4wNguE0alW0GEICCZ5JdnRvtPHRDIFnZFQdaApXUn_EuvuyOTMxfpkHtKRQsGGomswSnJzjnAgAwkLYjAtRe42ZEdmawa" />
-                            <button class="absolute top-1 right-1 size-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
-                                <span class="material-symbols-outlined text-[16px]">close</span>
-                            </button>
-                        </div>
-                        <div class="relative aspect-square rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 group">
-                            <img class="object-cover w-full h-full" data-alt="Close up of gourmet food plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH_CLD8golIezTphJGhcN1Mx_xcgTuwNGllz3W_VRDXhmvzVnpOoBMi42SZfFILKhCAjbhtwzWnOaUU_hD6HgE1RPOI25NKJiUwZACfezLGPQ9PbOX751enCqXzSC31GdnOoztpohQmR_YBWalL7Ac7StWsxImuDSxoFUkjELQWjbA0RSkhd8sImvKVPGFtD992dmUK-kGWNQlnM3cH1OfQlJb1EZL_vOKA9x9bTrQyv3ncVo3Y5HA3viEh29Zgao_y1mNYw2oUjaG" />
-                            <button class="absolute top-1 right-1 size-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
-                                <span class="material-symbols-outlined text-[16px]">close</span>
-                            </button>
-                        </div>
-                        <div class="relative aspect-square rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 group flex items-center justify-center bg-slate-100 dark:bg-slate-800">
-                            <span class="material-symbols-outlined text-slate-400">add_photo_alternate</span>
-                        </div>
+                        <!-- Previews -->
+                        <div id="preview" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 mt-4"></div>
                     </div>
                 </section>
 
+
+
             </div>
 
             </div>
-            <!-- Sticky Footer Action Bar -->
             <div class="mt-10 mb-20 flex items-center justify-end gap-4 p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800">
                 <button class="px-6 py-3 rounded-lg font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                     Cancel
                 </button>
                 <button class="px-10 py-3 bg-primary text-white rounded-lg font-bold hover:bg-blue-600 transition-colors shadow-md shadow-primary/20">
-                    Save Restaurant
+                    Update Restaurant
                 </button>
             </div>
         </form>
@@ -166,3 +142,46 @@
     <!-- Map Visualization Support -->
     <div class="hidden" data-location="San Francisco" style=""></div>
 </x-app-layout>
+<script>
+    const addBtn = document.getElementById('add-image-btn');
+    const imageInputs = document.getElementById('image-inputs');
+    const previewContainer = document.getElementById('preview');
+
+    function updatePreviews() {
+        previewContainer.innerHTML = '';
+        document.querySelectorAll('.image-url-input').forEach(input => {
+            if (input.value.trim() !== '') {
+                const div = document.createElement('div');
+                div.classList.add('relative', 'aspect-square', 'rounded-lg', 'overflow-hidden', 'border', 'border-slate-200', 'dark:border-slate-700', 'group');
+                div.innerHTML = `<img src="${input.value}" class="object-cover w-full h-full" />`;
+                previewContainer.appendChild(div);
+            }
+        });
+    }
+
+    // Update preview when typing
+    imageInputs.addEventListener('input', function(e) {
+        if (e.target.classList.contains('image-url-input')) {
+            updatePreviews();
+        }
+    });
+
+    // Add new input
+    addBtn.addEventListener('click', () => {
+        const div = document.createElement('div');
+        div.classList.add('flex', 'gap-2', 'items-center');
+        div.innerHTML = `
+            <input type="text" name="images[]" placeholder="Enter image URL" class="form-input w-full rounded-lg border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-10 px-4 focus:ring-primary focus:border-primary image-url-input" />
+            <button type="button" class="bg-red-500 text-white px-2 py-1 rounded remove-btn">X</button>
+        `;
+        imageInputs.appendChild(div);
+    });
+
+    // Remove input
+    imageInputs.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-btn')) {
+            e.target.parentElement.remove();
+            updatePreviews();
+        }
+    });
+</script>

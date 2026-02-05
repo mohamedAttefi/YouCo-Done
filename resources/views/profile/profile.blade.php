@@ -35,24 +35,31 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-col items-center gap-2">
-                        <form id="avatar-form"
-                            action="{{ route('profile.avatar.update') }}"
-                            method="POST"
-                            enctype="multipart/form-data"
-                            class="hidden"> @csrf
-                            @method('PATCH')
-                            <input type="file" id="avatar-input" name="avatar" accept="image/*" onchange="document.getElementById('avatar-form').submit()">
-                        </form>
+                    <form id="avatar-form"
+                        action="{{ route('profile.avatar.update') }}"
+                        method="POST"
+                        class="flex flex-col items-center gap-2 mt-2 w-full max-w-xs">
+                        @csrf
+                        @method('PATCH')
 
-                        <button type="button"
-                            onclick="document.getElementById('avatar-input').click()"
-                            class="flex items-center gap-2 px-6 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
-                            <span class="material-symbols-outlined text-xl">upload_file</span>
-                            <span>Change Photo</span>
+                        <label for="avatar-path" class="text-sm font-bold">Image Path</label>
+                        <input
+                            type="text"
+                            id="avatar-path"
+                            name="avatar"
+                            placeholder="Enter image URL or path"
+                            value="{{ $profilePhoto?->url ?? '' }}"
+                            class="form-input w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-11 px-4 focus:ring-primary focus:border-primary"
+                            oninput="document.getElementById('avatar-preview').style.backgroundImage = 'url(' + this.value + ')';" />
+                        <p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest text-center">
+                            Enter the path or URL of the image
+                        </p>
+                        <button type="submit"
+                            class="mt-2 px-6 py-2 bg-primary text-white rounded-xl font-bold hover:bg-blue-600 transition-all">
+                            Save Avatar
                         </button>
-                        <p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">JPG, PNG (Max 2MB)</p>
-                    </div>
+                    </form>
+
                 </div>
             </div>
 

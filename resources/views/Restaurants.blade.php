@@ -99,7 +99,7 @@
                 @foreach($restaurants as $restaurant )
                 <div class="group bg-white dark:bg-background-dark rounded-xl border border-[#e7edf3] dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
                     <div class="relative h-48 overflow-hidden">
-                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Modern Italian restaurant interior with warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-k2t1oFCQ2ZR_kD6PsKnzhReFUMiJbqqk-cwo_OOo28EWWRYIaQMp5ZlSW41BCi-yfKgkhqZboYFhlK3FEUWmY0L-DV2QtNs4uyJRmz3o5UsANSmNxP2rPUdeTt9zZZaOnesks-vMTIo-m7wqB8674bpePr0OPjcJ50mZuJphCE5uFGsTR0dgUU0KCwxgPqinZcCyV5cv6aAoQ3s3HteSh4TqaIMfQj3CyrinQrQZX_xz7ePiITVQVkKw7XTig6Oq4CEqijIUJL2U" />
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Modern Italian restaurant interior with warm lighting" src="{{ $restaurant->photos->first() ? $restaurant->photos->first()->url:'https://lh3.googleusercontent.com/aida-public/AB6AXuC-k2t1oFCQ2ZR_kD6PsKnzhReFUMiJbqqk-cwo_OOo28EWWRYIaQMp5ZlSW41BCi-yfKgkhqZboYFhlK3FEUWmY0L-DV2QtNs4uyJRmz3o5UsANSmNxP2rPUdeTt9zZZaOnesks-vMTIo-m7wqB8674bpePr0OPjcJ50mZuJphCE5uFGsTR0dgUU0KCwxgPqinZcCyV5cv6aAoQ3s3HteSh4TqaIMfQj3CyrinQrQZX_xz7ePiITVQVkKw7XTig6Oq4CEqijIUJL2U'}}"/>
                         <button class="absolute top-3 left-3 size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white hover:text-red-500 transition-all">
                             <span class="material-symbols-outlined text-lg">favorite</span>
                         </button>

@@ -84,15 +84,35 @@
                 </div>
                 <!-- Profile Footer -->
                 <div class="flex items-center gap-3 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/50">
-                    <div class="size-10 rounded-full bg-cover bg-center border border-white dark:border-slate-700" data-alt="Profile picture of the restaurant owner" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwDESgdLZ06lXdDLzK6FGM4mphUtVJoZ-jaRwnfufe0wrxag9TIfO4ROxlOISXtWxELSnmKEqK_j69BCUCOT3xkKX5-drN8BH3cDLIDy2DRL6EdxRay1i1shJ2pLFs6JgsaOUkcd8oEyCW0IjapLjod1C1x8R5at-c0ccI0_B7fsXmlID6r1IRpjWaVbUOX5TYbj1sgMjrwHX4gcQuET6i5ZSo_RQZSxL_XvwGuM1maM3bZfxpz07ziOtBhP0IpEGwLnJpPf7YTQef');">
+                    <div class="size-10 rounded-full bg-cover bg-center border border-white dark:border-slate-700" data-alt="Profile picture of the restaurant owner" @php
+                        $profilePhoto=Auth::user()
+                        ->photos()
+                        ->where('type', 'profile')
+                        ->latest()
+                        ->first();
+                        @endphp
+
+                        style='background-image: url("{{ $profilePhoto
+    ? asset($profilePhoto->url)
+    : "https://ui-avatars.com/api/?name=" . urlencode(Auth::user()->name) . "&color=7F9CF5&background=EBF4FF"
+}}");'>
                     </div>
                     <div class="flex flex-col min-w-0">
-                        <p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Marco Rossi</p>
+                        <p class="text-sm font-semibold text-slate-900 dark:text-white truncate"></p>{{ Auth::user()->name }}
                         <p class="text-xs text-slate-500 dark:text-slate-400 truncate">Owner Account</p>
                     </div>
                 </div>
             </aside>
             <main class="flex-1 flex flex-col overflow-hidden">
+                @if (session()->has('success'))
+                <div class="flex items-center gap-3 p-4 mb-6 rounded-lg
+                bg-green-50 border border-green-200 text-green-800">
+                    <span class="material-symbols-outlined text-green-600">check_circle</span>
+                    <span class="font-medium">
+                        {{ session('success') }}
+                    </span>
+                </div>
+                @endif
 
                 <div class="flex-1 overflow-y-auto p-8 bg-background-light dark:bg-background-dark">
                     <!-- Stats Overview -->
@@ -144,10 +164,21 @@
                                 <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
                                     <!-- Row 1 -->
                                     @foreach($restaurants as $restaurant)
-                                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+                                    <tr class=" hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
                                         <td class="px-6 py-4">
                                             <div class="flex items-center gap-3">
-                                                <div class="size-10 rounded-lg bg-cover bg-center" data-alt="Interior of The Italian Bistro" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDv4khEzZW5TYjS_FTYYwmajco11Edc1Tb78ABtqq5EZMOjR7CXXfmbPwX1E3CkpHu1A1BdVWG1CvSlRc8swkyqzyNj_DQNBdEYgZSoXD2eexn8eavclXPNbgsPNQ71M7JyEwBB5HtugDK7MelpsCcSACGojrrkiY0LIIxqaoiYFKGipoYDOXDiymvPHGW2Jj8wrEXv1usEKNnr9UhG5OEeL5_VTIw0tlJUD9ELdXXDrUKqIvzwsJQ9qb_gRCITy6Dvs5sssfMVG3MK');">
+                                                <div class="size-10 rounded-lg bg-cover bg-center" data-alt="Interior of The Italian Bistro" @php
+                                                    $retaurantPhoto=$restaurant
+                                                    ->photos()
+                                                    ->where('type', 'gallery')
+                                                    ->latest()
+                                                    ->first();
+                                                    @endphp
+
+                                                    style='background-image: url("{{ $retaurantPhoto
+    ? asset($retaurantPhoto->url)
+    : "https://i.pinimg.com/736x/90/ca/aa/90caaa56255abb31bfff1623161d76ce.jpg"
+}}");'>
                                                 </div>
                                                 <div>
                                                     <p class="text-sm font-bold text-slate-900 dark:text-white">{{ $restaurant->name }}</p>
@@ -159,19 +190,19 @@
                                             {{ $restaurant->city }}, {{ $restaurant->address }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-500">
-                                                
-                                            <span class="size-1.5 rounded-full {{ $restaurant->is_active == true? 'bg-green-600':'bg-red-600' }} dark:bg-green-500"></span>
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full {{ $restaurant->is_active == true? 'bg-green-100 text-green-700':'bg-red-100 text-red-700' }} text-xs font-bold dark:bg-green-500/10 dark:text-green-500">
+
+                                                <span class="size-1.5 rounded-full {{ $restaurant->is_active == true? 'bg-green-600':'bg-red-600' }} dark:bg-green-500"></span>
                                                 {{ $restaurant->is_active == true? 'Active':'Desactive' }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium">1,240</td>
                                         <td class="px-6 py-4 text-right">
                                             <div class="flex items-center justify-end gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
-                                                <a class="p-2 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors" title="Edit Restaurant">
+                                                <a href="{{ route('restaurant.edit', $restaurant->id) }}" class="p-2 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors" title="Edit Restaurant">
                                                     <span class="material-symbols-outlined text-lg">edit</span>
                                                 </a>
-                                                <a class="p-2 hover:bg-red-100 hover:text-red-600 rounded-lg transition-colors" title="Delete Restaurant">
+                                                <a href="{{ route('restaurant.delete', $restaurant->id) }}" class="p-2 hover:bg-red-100 hover:text-red-600 rounded-lg transition-colors" title="Delete Restaurant">
                                                     <span class="material-symbols-outlined text-lg">delete</span>
                                                 </a>
                                             </div>
