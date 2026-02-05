@@ -14,22 +14,19 @@ class ProfilePhotoController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'avatar' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'avatar' => 'nullable|string|url|max:2048',
         ]);
 
         $user->photos()
             ->where('type', 'profile')
             ->get()
             ->each(function ($photo) {
-                Storage::disk('public')->delete($photo->filename);
                 $photo->delete();
             });
 
-        $path = $request->file('avatar')->store('profiles', 'public');
 
         $user->photos()->create([
-            'filename' => $path,
-            'url' => Storage::url($path),
+            'url' => $request->avatar,
             'type' => 'profile',
         ]);
 
