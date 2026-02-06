@@ -3,33 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $fillable = ['restaurant_id', 'title', 'description', 'price'];
     public function index()
     {
-        //
+        
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id)
     {
-        return view('CreateMenu');
+        $menu = Restaurant::find($id)->menus;
+        return view('CreateMenu', ['id' => $id, 'menu' => $menu]);
+    }
+    public function store(Request $request, $restaurantId)
+    {
+        $request->validate([
+            'name.*' => 'required|string|max:255',
+            'price.*' => 'required|numeric|min:0',
+            'description.*' => 'nullable|string'
+        ]);
+
+        // Save items
+        foreach ($request->name as $index => $name) {
+            Menu::create([
+                'restaurant_id' => $restaurantId,
+                'title' => $name,
+                'price' => $request->price[$index],
+                'description' => $request->description[$index] ?? null,
+            ]);
+        }
+
+        return redirect()->route('restaurateur.dashboard')->with('success', 'Menu created successfully');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.

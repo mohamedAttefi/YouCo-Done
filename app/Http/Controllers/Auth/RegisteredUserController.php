@@ -42,6 +42,6 @@ class RegisteredUserController extends Controller
             'is_active' => true,
         ]);
         $user->assignRole($user->role);
-         return redirect()->route('login.form');
+        return redirect()->route('login.form');
     }
 }
