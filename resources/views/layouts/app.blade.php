@@ -39,13 +39,15 @@
             vertical-align: middle;
         }
 
+        .filled,
         .filled-icon {
             font-variation-settings: 'FILL' 1;
         }
     </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display text-[#0d141b] dark:text-slate-100 min-h-screen">
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d141b] dark:text-slate-100 min-h-screen flex flex-col">
+    @if($showHeader)
     <!-- Header Navigation -->
     <header class="sticky top-0 z-50 bg-white dark:bg-background-dark border-b border-solid border-[#e7edf3] dark:border-slate-800 px-6 py-3">
         <div class="max-w-[1440px] mx-auto flex items-center justify-between gap-8">
@@ -107,9 +109,11 @@
             </div>
         </div>
     </header>
-
-    {{ $slot }}
-
+    @endif
+    <main class="flex-1">
+        {{ $slot }}
+    </main>
+    @if($showFooter)
     <footer class="mt-12 bg-white dark:bg-background-dark border-t border-[#e7edf3] dark:border-slate-800 py-12 px-6">
         <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="flex flex-col gap-4">
@@ -149,6 +153,7 @@
             © 2024 BookMyTable Inc. All rights reserved.
         </div>
     </footer>
+    @endif
 </body>
 
 </html>

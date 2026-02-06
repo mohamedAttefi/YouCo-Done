@@ -68,10 +68,6 @@
                             <span class="text-sm">Reservations</span>
                         </a>
                         <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors font-medium" href="#">
-                            <span class="material-symbols-outlined">menu_book</span>
-                            <span class="text-sm">Menus</span>
-                        </a>
-                        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors font-medium" href="#">
                             <span class="material-symbols-outlined">analytics</span>
                             <span class="text-sm">Analytics</span>
                         </a>
@@ -199,6 +195,11 @@
                                         <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium">1,240</td>
                                         <td class="px-6 py-4 text-right">
                                             <div class="flex items-center justify-end gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
+                                                <a href="{{ route('menu.create', $restaurant->id) }}"
+                                                    class="p-2 hover:bg-green-100 hover:text-green-600 rounded-lg transition-colors"
+                                                    title="Add Menu">
+                                                    <span class="material-symbols-outlined text-lg">restaurant_menu</span>
+                                                </a>
                                                 <a href="{{ route('restaurant.edit', $restaurant->id) }}" class="p-2 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors" title="Edit Restaurant">
                                                     <span class="material-symbols-outlined text-lg">edit</span>
                                                 </a>
