@@ -35,6 +35,7 @@ Route::post('/Restaurateur/Add/Restaurant', [RestaurantController::class, 'store
 Route::get('/Restaurateur/Edit/Restaurant/{id}', [RestaurantController::class, 'edit'])->name('restaurant.edit')->middleware(['auth', 'role:restaurateur']);
 Route::post('/Restaurateur/Edit/Restaurant/{id}', [RestaurantController::class, 'update'])->name('restaurant.update')->middleware(['auth', 'role:restaurateur']);
 Route::get('/Restaurateur/delete/Restaurant/{id}', [RestaurantController::class, 'destroy'])->name('restaurant.delete')->middleware(['auth', 'role:restaurateur']);
-Route::get('/Restaurateur/add/menu', [MenuController::class, 'create'])->name('menu.create')->middleware(['auth', 'role:restaurateur']);
+Route::get('/Restaurateur/add/menu/{id}', [MenuController::class, 'create'])->name('menu.create')->middleware(['auth', 'role:restaurateur']);
+Route::post('/Restaurateur/add/menu/{id}', [MenuController::class, 'store'])->name('menu.store')->middleware(['auth', 'role:restaurateur']);
 
 Route::get('/Logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
